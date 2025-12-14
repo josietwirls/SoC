@@ -1,0 +1,80 @@
+# FPGA Bop It Game
+
+A reaction-based game implementation on the Nexys4 DDR FPGA board, recreating the classic "Bop It" experience.
+
+## Overview
+
+This project implements a progressively challenging reaction game where players must quickly perform the correct action in response to audio and visual prompts.
+
+## Hardware
+
+- **FPGA Board**: Nexys4 DDR
+- **System**: Chu's MMIO Sampler System (hardware cores and drivers)
+- **Peripherals Used**:
+  - ADXL362 Accelerometer (SPI)
+  - Debounced Buttons
+  - Switches
+  - Seven-Segment Display
+  - LEDs
+  - DDFS Audio Synthesis
+
+## Game Controls
+
+- **Button 0**: Start game / "Bop It"
+- **Switch 0**: "Pull It" (flip switch to ON position)
+- **Board Tilt**: "Twist It" (tilt board approximately 30 degrees)
+
+## Features
+
+- Three distinct input types with edge detection
+- Wrong action detection (game ends if you do the wrong move)
+- Progressive difficulty - reaction time decreases as score increases
+- Distinctive audio patterns for each action
+- Real-time score display
+- High score tracking
+- Visual feedback via LEDs and seven-segment display
+
+## Gameplay
+
+1. Press Button 0 to start
+2. Perform the prompted action before time runs out
+3. Game speeds up with each successful action
+4. Game ends on timeout or wrong action
+5. Try to beat your high score!
+
+## Timing
+
+- **Initial reaction time**: 3000ms
+- **Time decrease**: 150ms per successful action
+- **Minimum reaction time**: 800ms
+- **Difficulty peaks** around score 15
+
+## Audio Cues
+
+- **Bop It**: Two quick beeps (beep-beep)
+- **Pull It**: Rising three-note scale (do-re-mi)
+- **Twist It**: Warbling alternating tones (wah-wah-wah)
+- **Success**: High-pitched confirmation tone
+- **Game Over**: Low failure tone
+
+## Display
+
+- **Left side (digits 7-4)**: Action prompt ("bOP", "PULL", "turn")
+- **Right side (digits 3-0)**: Current score / High score
+
+## Implementation Details
+
+The game uses a finite state machine with three states: IDLE, PLAYING, and GAME_OVER. Input detection uses edge-triggered events to ensure accurate, single-fire responses. The accelerometer reads 3-axis acceleration data and compares against a 0.5g threshold for tilt detection.
+
+## Credits
+
+Hardware cores and drivers provided by Pong P. Chu's FPGA Prototyping by SystemVerilog Examples.
+
+## Author
+
+Josie D'Acquisto  
+Electrical and Computer Engineering, Baylor University
+
+## Demo
+
+[YouTube Demo Link]
